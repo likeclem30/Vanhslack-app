@@ -53,7 +53,7 @@ app.get('/screams',(req, res) =>{
         .collection('screams')
         .add(newScream)
         .then((doc) => {
-            res.json({message: 'document ${doc.id} created successfully'});
+            res.json({info: `document ${doc.id} created successfully`});
         })
         .catch((err) => {
             res.status(500).json({ error: 'something went wrong'});
@@ -62,7 +62,7 @@ app.get('/screams',(req, res) =>{
 });
 
 app.post('/signup',(req,res) =>{
-    const newUser = {
+    const signupUser = {
         email: req.body.email,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
@@ -70,11 +70,11 @@ app.post('/signup',(req,res) =>{
     };
     //TODO validate data
     firebase.auth()
-        .createUserWithEmailAndPassword(newUser.email,newUser.password)
+        .createUserWithEmailAndPassword(signupUser.email,signupUser.password)
         .then((data) => {
             return res
             .status(201)
-            .json({message: 'user ${data.user.uid} signed up successfully'});
+            .json({info: `Your Account with Id: ${data.user.uid} signed up successfully`});
         })
         .catch((err) => {
             console.error(err);
